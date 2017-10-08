@@ -15,8 +15,9 @@ class CreepypastaList extends Component {
   render() {
   	let list_items = null;
 
+
   	if(this.state.posts) {
-  		list_items = this.state.posts.map(post => { return <li key={post.id}><Link to={`/creepypasta/${post.slug}`}>{post.title.rendered} by {post.acf.author}</Link></li> });
+  		list_items = this.state.posts.map(post => { return <li key={post.id}><Link to={`/creepypasta/${post.slug}`}>{post.title.rendered} by {post.acf['story-author']}</Link></li> });
   	}
 
     return (
