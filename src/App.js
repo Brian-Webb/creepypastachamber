@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import { Switch, Route } from 'react-router-dom'
-import Home from './Home';
 import CreepypastaList from './CreepypastaList';
 import Creepypasta from './Creepypasta';
 
@@ -21,8 +18,7 @@ class App extends Component {
     return (
       <div className="App">
         <Switch>
-          <Route exact path='/creepypasta' component={CreepypastaList}/>
-          {/* both /roster and /roster/:number begin with /roster */}
+          <Route exact path='/' component={CreepypastaList}/>
           <Route path='/creepypasta/:string' component={Creepypasta}/>
         </Switch>
       </div>

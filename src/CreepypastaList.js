@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import { Link } from 'react-router-dom'
 
 class CreepypastaList extends Component {
@@ -10,7 +8,7 @@ class CreepypastaList extends Component {
       "posts": null
     };
 
-    fetch('http://api.creepypastachamber.com/wp-json/wp/v2/posts')
+    fetch('https://api.creepypastachamber.com/wp-json/wp/v2/creepypasta')
       .then(data => data.json())
       .then(data => this.setState({"posts": data}) );
   }
