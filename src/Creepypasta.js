@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 class Creepypasta extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class Creepypasta extends Component {
       	<h1>{post_title}</h1>
       	<div class="content" dangerouslySetInnerHTML={post_content}></div>
 
-      	<Link to="/creepypasta/">Back to List</Link>
+      	<Link to="/">Back to List</Link>
       </div>
     );
   }
