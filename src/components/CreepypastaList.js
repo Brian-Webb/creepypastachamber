@@ -4,22 +4,22 @@ import { Link } from 'react-router-dom';
 class CreepypastaList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      "posts": null
-    };
 
-    fetch('https://api.creepypastachamber.com/wp-json/wp/v2/creepypasta')
-      .then(data => data.json())
-      .then(data => this.setState({"posts": data}) );
+    this.handleCurrentPostClick = this.handleCurrentPostClick.bind(this);
+  }
+
+  handleCurrentPostClick(post) {
+    this.props.handleCurrentPostClick(post);
   }
 
   render() {
+
     document.title = "Creepypasta Chamber";
 
   	let list_items = null;
 
-  	if(this.state.posts) {
-  		list_items = this.state.posts.map(post => { return <CreepypastaListItem post={post} key={post.id} /> });
+  	if(this.props.posts) {
+  		list_items = this.props.posts.map(post => { return <CreepypastaListItem post={post} key={post.id} handleCurrentPostClick={this.handleCurrentPostClick} /> });
   	}
 
     return (
@@ -33,6 +33,16 @@ class CreepypastaList extends Component {
 }
 
 class CreepypastaListItem extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleCurrentPostClick = this.handleCurrentPostClick.bind(this);
+  }
+
+  handleCurrentPostClick(e) {
+    this.props.handleCurrentPostClick(this.props.post);
+  }
+
   render() {
     const post = this.props.post;
 
@@ -40,9 +50,9 @@ class CreepypastaListItem extends Component {
 
     return (
       <div className="CreepypastaListItem">
-        <Link to={`/creepypasta/${post.slug}`} params={{ post = post }} className="CreepypastaListItem__title">{post.title.rendered} <small>by {post.acf['story-author']}</small></Link>
+        <Link to={`/creepypasta/${post.slug}`} onClick={this.handleCurrentPostClick} className="CreepypastaListItem__title">{post.title.rendered} <small>by {post.acf['story-author']}</small></Link>
         <div className="CreepypastaListItem__summary" dangerouslySetInnerHTML={post_summary}></div>
-        <Link to={`/creepypasta/${post.slug}`} params={{ post = post }} className="button">Read More</Link>
+        <Link to={`/creepypasta/${post.slug}`} onClick={this.handleCurrentPostClick} className="button">Read More</Link>
       </div>
     )
   }

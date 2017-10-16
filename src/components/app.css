@@ -47,6 +47,15 @@ h1, a, a:active, a:visited {
 .CreepypastaListItem__summary p {
 	margin: .5rem 0;
 }
+.CreepypastaNarration .video-wrapper {
+	display: none;
+}
+.CreepypastaNarration.active .video-wrapper{
+	display: block;
+}
+.CreepypastaNarration.active .button {
+	display: none;
+}
 .video-wrapper {
 	position: relative;
 	padding-bottom: 56.25%; /* 16:9 */

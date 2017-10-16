@@ -5,29 +5,32 @@ class Creepypasta extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      "narration": null
+      "post": null
     };
+  }
 
-    fetch(`https://api.creepypastachamber.com/wp-json/wp/v2/creepypasta?slug=${props.match.params.string}`)
-      .then(data => data.json())
-      .then(data => {
-          this.setState({"post": data[0]}) 
-
-          if(this.state.post.acf.narration) {
-            fetch(`https://api.creepypastachamber.com/wp-json/wp/v2/creepypasta-narrations?slug=${this.state.post.acf.narration[0].post_name}`)
-            .then(data => data.json())
-            .then(data => this.setState({"narration": data[0]}) );
-          }
-      });
+  componentWillMount() {
+    if(this.props.currentPost) {
+      this.setState({"post": this.props.currentPost});
+    } else {
+      fetch(`https://api.creepypastachamber.com/wp-json/wp/v2/creepypasta?slug=${this.props.match.params.string}`)
+        .then(data => data.json())
+        .then(data => {
+            this.setState({"post": data[0]});
+        });
+    }
   }
 
   render() {
   	let post_title = null;
   	let post_content = null;
+    let narration = null;
 
   	if(this.state.post) {
   		post_title = this.state.post.title.rendered;
   		post_content = {__html: this.state.post.content.rendered};
+
+      if(this.state.post.acf.narration) narration = <CreepypastaNarration narration={this.state.post.acf.narration[0]} />;
 
       document.title = `${post_title} | Creepypasta Chamber`;
   	}
@@ -35,26 +38,48 @@ class Creepypasta extends Component {
     return (
       <div className="Creepypasta">
       	<h1>{post_title}</h1>
+
+        {narration}
+
       	<div className="content" dangerouslySetInnerHTML={post_content}></div>
 
       	<Link to="/" className="button">Back to List</Link>
-
-        <CreepypastaNarration narration={this.state.narration} />
       </div>
     );
   }
 }
 
 class CreepypastaNarration extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      "narration": null
+    }
+  }
+
+  componentWillMount() {
+    if(this.props.narration) {
+      fetch(`https://api.creepypastachamber.com/wp-json/wp/v2/creepypasta-narrations?slug=${this.props.narration.post_name}`)
+        .then(data => data.json())
+        .then(data => this.setState({"narration": data[0]}) );
+    }
+  }
+
+  handleNarrationLinkClick(e) {
+    document.querySelector('.CreepypastaNarration').className += ' active';
+  }
+
   render() {
     let narration_html = {__html: ''};
 
-    if(this.props.narration) {
-      narration_html = {__html: this.props.narration.acf.youtube_link.iframe};
+    if(this.state.narration) {
+      narration_html = {__html: this.state.narration.acf.youtube_link.iframe};
     }
 
     return (
       <div className="CreepypastaNarration">
+        <a className="button" onClick={this.handleNarrationLinkClick}>Listen while you read</a>
+
         <div className="video-wrapper">
           <div dangerouslySetInnerHTML={narration_html}></div>
         </div>
