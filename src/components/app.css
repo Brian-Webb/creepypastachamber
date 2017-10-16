@@ -47,6 +47,7 @@ h1, a, a:active, a:visited {
 }
 .CreepypastaListItem__summary p {
 	margin: .5rem 0;
+	text-align: justify;
 }
 .CreepypastaNarration .video-wrapper {
 	display: none;
@@ -56,6 +57,9 @@ h1, a, a:active, a:visited {
 }
 .CreepypastaNarration.active .button {
 	display: none;
+}
+.Creepypasta p {
+	text-align: justify;
 }
 .video-wrapper {
 	position: relative;
