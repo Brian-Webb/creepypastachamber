@@ -4,6 +4,9 @@ import CreepypastaList from './CreepypastaList';
 import Creepypasta from './Creepypasta';
 import './app.css';
 
+var ReactGA = require('react-ga');
+ReactGA.initialize('UA-17490881-29');
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -20,10 +23,9 @@ class App extends Component {
         .then(data => this.setState({"posts": data}) );
     }
   }
-  handleCurrentPostClick(post) {
-    this.setState({"currentPost": post});
 
-    return true;
+  componentDidUpdate() {
+    this.logPageView();
   }
 
   render() {
@@ -48,6 +50,20 @@ class App extends Component {
         </section>
       </div>
     );
+  }
+
+  // custom functions
+  handleCurrentPostClick(post) {
+    this.setState({"currentPost": post});
+
+    return true;
+  }
+
+  logPageView() {
+    console.log('sent', window.location.pathname + window.location.search);
+    
+    ReactGA.set({ page: window.location.pathname + window.location.search });
+    ReactGA.pageview(window.location.pathname + window.location.search);
   }
 }
 
