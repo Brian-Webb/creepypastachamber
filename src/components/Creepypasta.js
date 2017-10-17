@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Html5Entities } from 'html-entities';
 
 class Creepypasta extends Component {
   constructor(props) {
@@ -22,33 +23,38 @@ class Creepypasta extends Component {
   }
 
   render() {
-  	let post_title = null;
+    const entities = new Html5Entities();
+    
+    let post_title   = null;
+    let post_author  = null;
   	let post_content = null;
-    let narration = null;
+    let narration    = null;
 
   	if(this.state.post) {
       const post = this.state.post;
 
-      post_title = {__html: `${post.title.rendered} <br><small>by ${post.acf['story-author']}</small>`};
-  		
+      post_title   = entities.decode(post.title.rendered);
+      post_author  = entities.decode(post.acf['story-author']);
       post_content = {__html: post.content.rendered};
 
       if(post.acf.narration) narration = <CreepypastaNarration narration={post.acf.narration[0]} />;
 
-      document.title = `${post_title} | Creepypasta Chamber`;
-  	}
+      document.title = `${entities.decode(post_title)} | Creepypasta Chamber`;
 
-    return (
-      <div className="Creepypasta">
-      	<h1 dangerouslySetInnerHTML={post_title}></h1>
+      return (
+        <div className="Creepypasta">
+        	<h1>{post_title} <br /><small>by {post_author}</small></h1>
 
-        {narration}
+          {narration}
 
-      	<div className="content" dangerouslySetInnerHTML={post_content}></div>
+        	<div className="content" dangerouslySetInnerHTML={post_content}></div>
 
-      	<Link to="/" className="button">Back to List</Link>
-      </div>
-    );
+        	<Link to="/" className="button">Back to List</Link>
+        </div>
+      );
+    }
+
+    return false;
   }
 }
 

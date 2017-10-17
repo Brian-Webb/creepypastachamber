@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Html5Entities } from 'html-entities';
 
 class CreepypastaList extends Component {
   constructor(props) {
@@ -44,14 +45,18 @@ class CreepypastaListItem extends Component {
   }
 
   render() {
-    const post = this.props.post;
-    const post_title = {__html: `${post.title.rendered} <br><small>by ${post.acf['story-author']}</small>`};
+    const entities = new Html5Entities();
 
+    const post         = this.props.post;
+    const post_title   = entities.decode(post.title.rendered);
+    const post_author  = entities.decode(post.acf['story-author']);
     const post_summary = {__html: post.acf.summary};
 
     return (
       <div className="CreepypastaListItem">
-        <Link to={`/creepypasta/${post.slug}`} onClick={this.handleCurrentPostClick} dangerouslySetInnerHTML={post_title} className="CreepypastaListItem__title"></Link>
+        <Link to={`/creepypasta/${post.slug}`} onClick={this.handleCurrentPostClick} className="CreepypastaListItem__title">
+          {post_title} <br /><small>by {post_author}</small>
+        </Link>
         <div className="CreepypastaListItem__summary" dangerouslySetInnerHTML={post_summary}></div>
         <Link to={`/creepypasta/${post.slug}`} onClick={this.handleCurrentPostClick} className="button">Read More</Link>
       </div>
