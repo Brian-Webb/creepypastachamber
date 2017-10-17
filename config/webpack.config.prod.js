@@ -316,13 +316,13 @@ module.exports = {
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
 
       runtimeCaching: [{
-        urlPattern: /^https:\/\/fonts.googleapis\.com/,
+        urlPattern: /^https:\/\/fonts\.googleapis\.com/,
         handler: 'networkFirst'
       }, {
-        urlPattern: /^https:\/\/www.google-analytics\.com/,
+        urlPattern: /^https:\/\/www\.google-analytics\.com/,
         handler: 'networkFirst'
       }, {
-        urlPattern: /^https:\/\/api.creepypastachamber\.com/,
+        urlPattern: /^https:\/\/api\.creepypastachamber\.com/,
         handler: 'networkFirst'
       }]
     }),
