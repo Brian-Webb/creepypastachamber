@@ -18,7 +18,7 @@ class App extends Component {
     this.handleCurrentPostClick = this.handleCurrentPostClick.bind(this);
 
     if(! this.state.posts) {
-      fetch('https://api.creepypastachamber.com/wp-json/wp/v2/creepypasta?per_page=100')
+      fetch('https://api.creepypastachamber.com/wp-json/wp/v2/creepypasta?per_page=25&sort=desc')
         .then(data => data.json())
         .then(data => this.setState({"posts": data}) );
     }
