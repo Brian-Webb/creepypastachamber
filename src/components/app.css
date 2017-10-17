@@ -28,6 +28,10 @@ h1, a, a:active, a:visited {
 	color: #c70e0e;
 	text-decoration: none;
 }
+h1 small {
+  font-size: .9rem;
+  font-family: 'Roboto', sans-serif;
+}
 .CreepypastaListItem {
 	border-bottom: 1px solid #999;
 	padding-bottom: 2.5rem;
@@ -36,6 +40,10 @@ h1, a, a:active, a:visited {
 .CreepypastaListItem__title {
 	font-size: 1.2rem;
 	font-weight: 500;
+  line-height: 1;
+}
+.CreepypastaListItem__title small {
+  font-size: .8rem;
 }
 .button {
 	font-size:.7rem;

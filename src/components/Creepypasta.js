@@ -27,17 +27,20 @@ class Creepypasta extends Component {
     let narration = null;
 
   	if(this.state.post) {
-  		post_title = this.state.post.title.rendered;
-  		post_content = {__html: this.state.post.content.rendered};
+      const post = this.state.post;
 
-      if(this.state.post.acf.narration) narration = <CreepypastaNarration narration={this.state.post.acf.narration[0]} />;
+      post_title = {__html: `${post.title.rendered} <br><small>by ${post.acf['story-author']}</small>`};
+  		
+      post_content = {__html: post.content.rendered};
+
+      if(post.acf.narration) narration = <CreepypastaNarration narration={post.acf.narration[0]} />;
 
       document.title = `${post_title} | Creepypasta Chamber`;
   	}
 
     return (
       <div className="Creepypasta">
-      	<h1>{post_title}</h1>
+      	<h1 dangerouslySetInnerHTML={post_title}></h1>
 
         {narration}
 

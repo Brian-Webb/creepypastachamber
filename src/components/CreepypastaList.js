@@ -45,12 +45,13 @@ class CreepypastaListItem extends Component {
 
   render() {
     const post = this.props.post;
+    const post_title = {__html: `${post.title.rendered} <br><small>by ${post.acf['story-author']}</small>`};
 
     const post_summary = {__html: post.acf.summary};
 
     return (
       <div className="CreepypastaListItem">
-        <Link to={`/creepypasta/${post.slug}`} onClick={this.handleCurrentPostClick} className="CreepypastaListItem__title">{post.title.rendered} <small>by {post.acf['story-author']}</small></Link>
+        <Link to={`/creepypasta/${post.slug}`} onClick={this.handleCurrentPostClick} dangerouslySetInnerHTML={post_title} className="CreepypastaListItem__title"></Link>
         <div className="CreepypastaListItem__summary" dangerouslySetInnerHTML={post_summary}></div>
         <Link to={`/creepypasta/${post.slug}`} onClick={this.handleCurrentPostClick} className="button">Read More</Link>
       </div>
