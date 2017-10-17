@@ -60,8 +60,6 @@ class App extends Component {
   }
 
   logPageView() {
-    console.log('sent', window.location.pathname + window.location.search);
-    
     ReactGA.set({ page: window.location.pathname + window.location.search });
     ReactGA.pageview(window.location.pathname + window.location.search);
   }
